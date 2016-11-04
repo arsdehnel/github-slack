@@ -1,0 +1,15 @@
+{
+  "name": "github-slack",
+  "version": "0.1.0",
+  "description": "Express server that accepts a github event and translates that into an appropriate payload for a Slack incoming webhook",
+  "author": "Adam Dehnel <adam.dehnel@biworldwide.com>",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.13.3"
+  }
+}
