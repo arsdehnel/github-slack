@@ -35,6 +35,7 @@ notify:
     webhook_url: https://hooks.slack.com/services/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
     channel: hack-devops
     from: drone
+    template: ":deathstar: *FAIL*\n - {{build.link_url}}\n - by {{build.author}}"
     when:
       branch: master
       repo: biw-labs/github-slack
