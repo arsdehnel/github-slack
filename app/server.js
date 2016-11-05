@@ -11,7 +11,7 @@ const PORT = 8080;
 const config = {
 	"TSG-FED/demo-docs": {
 		"url": "/services/T18CYMQSU/B2YB01JSF/jQJx96Q0UO1ieGbwVpH2OvR3",
-		"channel": "github-hook-example"
+		"channel": "#github-hook-example"
 	}
 }
 
