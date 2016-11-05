@@ -8,11 +8,21 @@ var bodyParser = require('body-parser');
 
 const PORT = 8080;
 
+const teams = {
+    "pdev": {
+        "url": "/services/T18CYMQSU/B2YB01JSF/jQJx96Q0UO1ieGbwVpH2OvR3"
+    }
+}
+
 const config = {
 	"TSG-FED/demo-docs": {
-		"url": "/services/T18CYMQSU/B2YB01JSF/jQJx96Q0UO1ieGbwVpH2OvR3",
+		"url": teams.pdev.url,
 		"channel": "#github-hook-example"
-	}
+	},
+    "goalquest/goalquest": {
+        "url": teams.pdev.url,
+        "channel": "#gq-builds"
+    }
 }
 
 const app = express();
