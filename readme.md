@@ -8,4 +8,4 @@ Only way to commit to master is through PR
 
 ## Dashboard
 
-build-status.biw-labs.com
+Build status for this repo (and many others): build-status.biw-labs.com
