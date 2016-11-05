@@ -1,12 +1,11 @@
 'use strict';
-// user name, organization name, repo name, branch name, time, link to git event, message, event type, files changed?
 
+// user name, organization name, repo name, branch name, time, link to git event, message, event type, files changed?
 
 const express = require('express');
 const https = require('https');
 var bodyParser = require('body-parser');
 
-// Constants
 const PORT = 8080;
 
 const config = {
@@ -16,9 +15,8 @@ const config = {
 	}
 }
 
-// App
 const app = express();
-app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.json());
 
 app.post('/event', function (req, res) {
 
