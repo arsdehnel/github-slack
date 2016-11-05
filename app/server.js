@@ -21,9 +21,10 @@ app.use(bodyParser.json());
 app.post('/event', function (req, res) {
 
 	var notifier = config[req.body.repository.full_name];
-	var notification = {
-		"channel": notifier.channel
-	};
+	// var notification = {
+	// 	"channel": notifier.channel
+	// };
+    var notification = {};
 
     notification.attachments = [
         {
