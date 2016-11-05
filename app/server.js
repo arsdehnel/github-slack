@@ -54,6 +54,7 @@ app.post('/event', function (req, res) {
         hostname: 'hooks.slack.com',
         path: notifier.url,
         port: 443,
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(notification)
