@@ -26,6 +26,12 @@ app.post('/event', function (req, res) {
 	// };
     var notification = {};
 
+    // var fileChanges = {
+    //     "added": [],
+    //     "removed": [],
+    //     "modified": []
+    // }
+
     notification.attachments = [
         {
             "fallback": "GitHub push notification for "+req.body.repository.full_name,
@@ -37,14 +43,14 @@ app.post('/event', function (req, res) {
             "title_link": req.body.head_commit.url,
             "fields": [
                 {
-                    "title": "Author",
+                    "title": "Files added",
                     "value": req.body.head_commit.author.name,
                     "short": false
                 }
             ],
             "footer": "BIW CPD GitHub Notifier",
             "footer_icon": "https://avatars2.githubusercontent.com/u/22757997?v=3&s=60",
-            "ts": 123456789
+            "ts": req.body.repository.pushed_at
         }
     ]
 
