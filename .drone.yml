@@ -1,0 +1,50 @@
+build:
+  jumprope:
+    image: node:6.2.2
+    commands:
+      - npm install
+
+publish:
+  ecr:
+    access_key: $$ECR_ACCESS_KEY
+    secret_key: $$ECR_SECRET_KEY
+    region: us-west-2
+    repo: github-slack-ui
+    tag: "$${COMMIT:0:7}"
+    create_repository: true
+    when:
+      branch: master
+      repo: biw-labs/github-slack
+
+deploy:
+  rancher:
+    url: http://rancher.biw-labs.com:8080
+    access_key: $$RANCHER_DEFAULT_ACCESS_KEY
+    secret_key: $$RANCHER_DEFAULT_SECRET_KEY
+    service: github-slack/ui
+    docker_image: 302265824077.dkr.ecr.us-west-2.amazonaws.com/github-slack-ui:$${COMMIT:0:7}
+    start_first: true
+    confirm: true
+    timeout: 120
+    when:
+      branch: master
+      repo: biw-labs/github-slack
+
+notify:
+  slack:
+    webhook_url: https://hooks.slack.com/services/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
+    channel: hack-devops
+    from: drone
+    when:
+      branch: master
+      repo: biw-labs/github-slack
+      failure: true
+  pull-request:
+    image: slack
+    webhook_url: https://hooks.slack.com/services/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
+    channel: hack-devops
+    from: drone
+    template: ":thefalcon: *Ready for review* - {{build.title}}\n - {{build.link_url}}\n - by {{build.author}}"
+    when:
+      success: true
+      event: pull_request
