@@ -5,8 +5,8 @@
   "author": "Adam Dehnel <adam.dehnel@biworldwide.com>",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon ./app/server.js",
+    "start": "node ./app/server.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
