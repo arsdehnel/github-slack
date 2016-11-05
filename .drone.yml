@@ -1,5 +1,5 @@
 build:
-  jumprope:
+  github-slack:
     image: node:6.2.2
     commands:
       - npm install

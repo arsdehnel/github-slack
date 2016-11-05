@@ -1,4 +1,0 @@
-ghe-slack:
-  image: github-slack
-  ports:
-    - "49163:8080"
