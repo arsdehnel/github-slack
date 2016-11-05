@@ -5,3 +5,7 @@ This is a pretty simple app that receives github event payloads and translates t
 ## Gotta PR
 
 Only way to commit to master is through PR
+
+## Dashboard
+
+build-status.biw-labs.com
