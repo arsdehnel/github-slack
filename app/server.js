@@ -36,25 +36,51 @@ app.post('/event', function (req, res) {
 	// };
     var notification = {};
 
-    // var fileChanges = {
-    //     "added": [],
-    //     "removed": [],
-    //     "modified": []
-    // }
+    var fileChanges = {
+        "added": [],
+        "removed": [],
+        "modified": []
+    }
+
+    var commitMessages = req.body.commits.map((commit) => {
+        return commit.message
+    })
+
+    console.log(commitMessages);
 
     notification.attachments = [
         {
             "fallback": "GitHub push notification for "+req.body.repository.full_name,
             "color": "#36a64f",
-            "pretext": "An event on github.biworldwide.com triggered this notification",
+            "pretext": "A _*"+req.headers['X-GitHub-Event']+"*_ event on <a href='"+req.body.repository.html_url+"'>"+req.body.repository.full_name+"</a> triggered this notification",
             "author_name": req.body.head_commit.author.name,
-            "author_link": "mailto:"+req.body.head_commit.author.email,
+            "author_link": req.body.sender.html_url,
             "title": req.body.head_commit.message,
             "title_link": req.body.head_commit.url,
             "fields": [
                 {
+                    "title": "Event type",
+                    "value": req.headers['X-GitHub-Event'],
+                    "short": false
+                },
+                {
                     "title": "Files added",
-                    "value": req.body.head_commit.author.name,
+                    "value": req.body.head_commit.added.join(','),
+                    "short": false
+                },
+                {
+                    "title": "Files removed",
+                    "value": req.body.head_commit.removed.join(','),
+                    "short": false
+                },
+                {
+                    "title": "Files modified",
+                    "value": req.body.head_commit.modified.join(','),
+                    "short": false
+                },
+                {
+                    "title": "Commit Messages",
+                    "value": commitMessages.join(','),
                     "short": false
                 }
             ],
