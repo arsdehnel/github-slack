@@ -19,6 +19,10 @@ const config = {
 		"url": teams.pdev.url,
 		"channel": "#github-hook-example"
 	},
+    "TSG-Product-Development/penta-g": {
+        "url": teams.pdev.url,
+        "channel": "#g6-dev"  
+    },
     "goalquest/goalquest": {
         "url": teams.pdev.url,
         "channel": "#gq-builds"
@@ -34,6 +38,8 @@ app.post('/event', function (req, res) {
 	// var notification = {
 	// 	"channel": notifier.channel
 	// };
+    //     "username": "ghost-bot",
+    // "icon_emoji": ":ghost:",
     var notification = {};
 
     var fileChanges = {
