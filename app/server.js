@@ -58,7 +58,7 @@ app.post('/event', function (req, res) {
         {
             "fallback": "GitHub push notification for "+req.body.repository.full_name,
             "color": "#36a64f",
-            "pretext": "A _*"+req.headers['X-GitHub-Event']+"*_ event on <a href='"+req.body.repository.html_url+"'>"+req.body.repository.full_name+"</a> triggered this notification",
+            "pretext": "A _*"+req.headers['X-GitHub-Event']+"*_ event on <"+req.body.repository.html_url+"|"+req.body.repository.full_name+"> triggered this notification",
             "author_name": req.body.head_commit.author.name,
             "author_link": req.body.sender.html_url,
             "title": req.body.head_commit.message,
