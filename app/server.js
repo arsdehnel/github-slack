@@ -35,6 +35,7 @@ app.use(bodyParser.json());
 app.post('/event', function (req, res) {
 
 	var notifier = config[req.body.repository.full_name];
+    var eventType = req.headers['x-github-event'];
 	// var notification = {
 	// 	"channel": notifier.channel
 	// };
@@ -52,13 +53,13 @@ app.post('/event', function (req, res) {
         return commit.message
     })
 
-    console.log(commitMessages);
+    // console.log(commitMessages);
 
     notification.attachments = [
         {
-            "fallback": "GitHub push notification for "+req.body.repository.full_name,
+            "fallback": `GitHub ${eventType} notification for ${req.body.repository.full_name}`,
             "color": "#36a64f",
-            "pretext": "A _*"+req.headers['X-GitHub-Event']+"*_ event on <"+req.body.repository.html_url+"|"+req.body.repository.full_name+"> triggered this notification",
+            "pretext": `A _*${eventType}*_ event on <"+req.body.repository.html_url+"|"+req.body.repository.full_name+"> triggered this notification`,
             "author_name": req.body.head_commit.author.name,
             "author_link": req.body.sender.html_url,
             "title": req.body.head_commit.message,
