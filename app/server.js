@@ -1,7 +1,5 @@
 'use strict';
 
-// user name, organization name, repo name, branch name, time, link to git event, message, event type, files changed?
-
 const express = require('express');
 const https = require('https');
 var bodyParser = require('body-parser');
@@ -86,6 +84,8 @@ app.post('/event', function (req, res) {
     if( eventParsers[eventType] ){
         notification.fields = eventParsers[eventType](req.body);
     }
+
+    console.log(req.body);
 
     notification.fields.push({
         "title": "GitHub Event",
