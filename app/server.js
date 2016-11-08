@@ -109,9 +109,7 @@ app.post('/event', function (req, res) {
         }
     ]
 
-    notification = JSON.stringify(notification);
-
-    var options = {
+    notification.options = {
         hostname: 'hooks.slack.com',
         path: notification.url,
         port: 443,
@@ -122,19 +120,19 @@ app.post('/event', function (req, res) {
         }
     };  
 
-    console.log(notification);
+    notification = JSON.stringify(notification);
 
-    var req = https.request(options, (res) => {
-        console.log(options);       
-        console.log(`STATUS: ${res.statusCode}`);       
-        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
+    var req = https.request(notification.options, (res) => {
+        // console.log(noptions);       
+        // console.log(`STATUS: ${res.statusCode}`);       
+        // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
         res.setEncoding('utf8');
-        res.on('data', (chunk) => {     
-            console.log(`BODY: ${chunk}`);      
-        });     
-        res.on('end', () => {       
-            console.log('No more data in response.');       
-        });
+        // res.on('data', (chunk) => {     
+        //     console.log(`BODY: ${chunk}`);      
+        // });     
+        // res.on('end', () => {       
+        //     console.log('No more data in response.');       
+        // });
     });
     
     req.on('error', (e) => {
