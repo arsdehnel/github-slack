@@ -21,9 +21,9 @@ const defaults = {
 }
 
 const dataStore = {
-	"TSG-FED/demo-docs": {
-		url: teams.pdev.url
-	},
+    "TSG-FED/demo-docs": {
+        url: teams.pdev.url
+    },
     "TSG-Product-Development/penta-g": {
         url: teams.pdev.url,
         _channel: "#g6-dev"  
@@ -79,13 +79,13 @@ app.use(bodyParser.json());
 app.post('/event', function (req, res) {
 
     var eventType = req.headers['x-github-event'];
-	var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
+    var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
 
     if( eventParsers[eventType] ){
         notification.fields = eventParsers[eventType](req.body);
     }
 
-    console.log(req.body);
+    console.log(req.body.head_commit);
 
     notification.fields.push({
         "title": "GitHub Event",
@@ -120,10 +120,12 @@ app.post('/event', function (req, res) {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(notification)
         }
-    };	
+    };  
 
-	var req = https.request(options, (res) => {
-		res.setEncoding('utf8');
+    console.log(notification);
+
+    var req = https.request(options, (res) => {
+        res.setEncoding('utf8');
     });
     
     req.on('error', (e) => {
@@ -133,7 +135,7 @@ app.post('/event', function (req, res) {
     req.write(notification);
     req.end();
 
-  	res.json(notification);
+    res.json(notification);
 
 });
 
