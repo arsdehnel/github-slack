@@ -76,10 +76,11 @@ const eventParsers = {
 const app = express();
 app.use(bodyParser.json());
 
+var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
+
 app.post('/event', function (req, res) {
 
     var eventType = req.headers['x-github-event'];
-    var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
 
     if( eventParsers[eventType] ){
         notification.fields = eventParsers[eventType](req.body);
