@@ -80,12 +80,20 @@ app.post('/event', function (req, res) {
 
     var eventType = req.headers['x-github-event'];
     var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
+    var payload = req.body;
 
     if( eventParsers[eventType] ){
         notification.fields = eventParsers[eventType](req.body);
     }
 
     console.log(JSON.stringify(req.body.head_commit));
+
+    if( !req.body.head_commit ){
+        console.log('------------------------------------------------------');
+        console.log('No head commit');
+        console.log(req.body);
+        res.status(400).send('Need head_commit!')
+    }
 
     notification.fields.push({
         "title": "GitHub Event",
@@ -98,14 +106,14 @@ app.post('/event', function (req, res) {
             "fallback": `GitHub ${eventType} notification for ${req.body.repository.full_name}`,
             "color": "#36a64f",
             "pretext": `A _*${eventType}*_ event on <${req.body.repository.html_url}|${req.body.repository.full_name}> triggered this notification`,
-            "author_name": req.body.head_commit.author.name,
-            "author_link": req.body.sender.html_url,
-            "title": req.body.head_commit.message,
-            "title_link": req.body.head_commit.url,
+            "author_name": payload.head_commit.author.name,
+            "author_link": payload.sender.html_url,
+            "title": payload.head_commit.message,
+            "title_link": payload.head_commit.url,
             "fields": notification.fields,
             "footer": "BIW CPD GitHub Notifier",
             "footer_icon": "https://avatars2.githubusercontent.com/u/22757997?v=3&s=60",
-            "ts": req.body.repository.pushed_at
+            "ts": payload.repository.pushed_at
         }
     ]
 
