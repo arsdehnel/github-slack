@@ -116,11 +116,11 @@ app.post('/event', function (req, res) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(notification)
+            'Content-Length': Buffer.byteLength(JSON.stringify(notification))
         }
     };  
 
-    notification = JSON.stringify(notification);
+    // notification = JSON.stringify(notification);
 
     var req = https.request(notification.options, (res) => {
         // console.log(noptions);       
@@ -139,7 +139,7 @@ app.post('/event', function (req, res) {
         console.log(`problem with request: ${e.message}`);
     });
     
-    req.write(notification);
+    req.write(JSON.stringify(notification));
     req.end();
 
     res.json(notification);
