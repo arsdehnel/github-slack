@@ -76,11 +76,10 @@ const eventParsers = {
 const app = express();
 app.use(bodyParser.json());
 
-var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
-
 app.post('/event', function (req, res) {
 
     var eventType = req.headers['x-github-event'];
+    var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
 
     if( eventParsers[eventType] ){
         notification.fields = eventParsers[eventType](req.body);
@@ -150,8 +149,9 @@ app.post('/event', function (req, res) {
 });
 
 
-app.listen(PORT);
-console.log('Running on http://localhost:' + PORT);
-
-    
-
+// app.listen(PORT);
+var server = app.listen(3000, function () {
+  var port = server.address().port;
+  console.log('Example app listening at port %s', port);
+});
+module.exports = server;

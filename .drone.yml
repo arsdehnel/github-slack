@@ -1,8 +1,9 @@
 build:
-  github-slack:
+  jumprope:
     image: node:6.2.2
     commands:
       - npm install
+      - npm test
 
 publish:
   ecr:
