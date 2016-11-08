@@ -6,10 +6,14 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon ./app/server.js",
+    "test": "mocha -R spec ./tests/event.js",
     "start": "node ./app/server.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.13.3"
+  },
+  "devDependencies": {
+    "supertest": "^2.0.1"
   }
 }
