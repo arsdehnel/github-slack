@@ -85,7 +85,7 @@ app.post('/event', function (req, res) {
         notification.fields = eventParsers[eventType](req.body);
     }
 
-    console.log(req.body.head_commit);
+    console.log(JSON.stringify(req.body.head_commit));
 
     notification.fields.push({
         "title": "GitHub Event",
@@ -125,7 +125,16 @@ app.post('/event', function (req, res) {
     console.log(notification);
 
     var req = https.request(options, (res) => {
+        console.log(options);       
+        console.log(`STATUS: ${res.statusCode}`);       
+        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
         res.setEncoding('utf8');
+        res.on('data', (chunk) => {     
+            console.log(`BODY: ${chunk}`);      
+        });     
+        res.on('end', () => {       
+            console.log('No more data in response.');       
+        });
     });
     
     req.on('error', (e) => {
