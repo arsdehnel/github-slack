@@ -17,6 +17,7 @@ const defaults = {
     channel: "#github-hook-example",
     username: "biw-cpd-github-bot",
     icon_emoji: ":bulb:",
+    mrkdwn: true,
     fields: []
 }
 
@@ -40,21 +41,21 @@ const eventParsers = {
         if( request.head_commit.added.length > 0 ){
             returnArray.push({
                 title: "Files added",
-                value: request.head_commit.added.join('<br>'),
+                value: "-\t"+request.head_commit.added.join('\n-\t'),
                 short: false
             });
         }
         if( request.head_commit.modified.length > 0 ){
             returnArray.push({
                 title: "Files modified",
-                value: request.head_commit.modified.join('<br>'),
+                value: "-\t"+request.head_commit.modified.join('\n-\t'),
                 short: false
             });
         }
         if( request.head_commit.removed.length > 0 ){
             returnArray.push({
                 title: "Files removed",
-                value: request.head_commit.removed.join('<br>'),
+                value: "-\t"+request.head_commit.removed.join('\n-\t'),
                 short: false
             });
         }
@@ -64,7 +65,7 @@ const eventParsers = {
             })            
             returnArray.push({
                 "title": "Commit Messages",
-                "value": commitMessages.join('<br>'),
+                "value": "-\t"+commitMessages.join('\n-\t'),
                 "short": false
             })
         }
@@ -74,9 +75,16 @@ const eventParsers = {
 }
 
 const app = express();
-app.use(bodyParser.json());
 
-app.post('/event', function (req, res) {
+function errorHandler (err, req, res, next) {
+  res.status(500)
+  res.render('error', { error: err })
+}
+
+app.use(bodyParser.json());
+app.use(errorHandler)
+
+app.post('/event', function (req, res, next) {
 
     var eventType = req.headers['x-github-event'];
     var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
@@ -86,38 +94,30 @@ app.post('/event', function (req, res) {
         notification.fields = eventParsers[eventType](req.body);
     }
 
-    console.log(JSON.stringify(req.body.head_commit));
-
-    if( !req.body.head_commit ){
+    if( !req.body.head_commit.author ){
         console.log('------------------------------------------------------');
         console.log('No head commit');
-        console.log(req.body);
-        res.status(400).send('Need head_commit!')
+        // console.log(req.body);
+        res.status(400).send('Need head_commit!').end();
+        return {};
     }
 
-    notification.fields.push({
-        "title": "GitHub Event",
-        "value": eventType,
-        "short": false
-    })
+    notification.attachments = [{
+        "fallback": `GitHub ${eventType} notification for ${req.body.repository.full_name}`,
+        "color": "#36a64f",
+        "pretext": `A *${eventType}* event on <${req.body.repository.html_url}|${req.body.repository.full_name}> triggered this notification`,
+        "author_name": payload.head_commit.author.name,
+        "author_link": payload.sender.html_url,
+        "title": payload.head_commit.message,
+        "title_link": payload.head_commit.url,
+        "fields": notification.fields,
+        "footer": "BIW CPD GitHub Notifier",
+        "footer_icon": "https://avatars2.githubusercontent.com/u/22757997?v=3&s=60",
+        "ts": payload.repository.pushed_at,
+        "mrkdwn_in": ["pretext"]
+    }];
 
-    notification.attachments = [
-        {
-            "fallback": `GitHub ${eventType} notification for ${req.body.repository.full_name}`,
-            "color": "#36a64f",
-            "pretext": `A _*${eventType}*_ event on <${req.body.repository.html_url}|${req.body.repository.full_name}> triggered this notification`,
-            "author_name": payload.head_commit.author.name,
-            "author_link": payload.sender.html_url,
-            "title": payload.head_commit.message,
-            "title_link": payload.head_commit.url,
-            "fields": notification.fields,
-            "footer": "BIW CPD GitHub Notifier",
-            "footer_icon": "https://avatars2.githubusercontent.com/u/22757997?v=3&s=60",
-            "ts": payload.repository.pushed_at
-        }
-    ]
-
-    notification.options = {
+    var requestOptions = {
         hostname: 'hooks.slack.com',
         path: notification.url,
         port: 443,
@@ -128,10 +128,7 @@ app.post('/event', function (req, res) {
         }
     };  
 
-    // notification = JSON.stringify(notification);
-
-    var req = https.request(notification.options, (res) => {
-        // console.log(noptions);       
+    var req = https.request(requestOptions, (res) => {
         console.log(`STATUS: ${res.statusCode}`);       
         console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
         res.setEncoding('utf8');
@@ -154,8 +151,6 @@ app.post('/event', function (req, res) {
 
 });
 
-
-// app.listen(PORT);
 var server = app.listen(3000, function () {
   var port = server.address().port;
   console.log('Example app listening at port %s', port);
