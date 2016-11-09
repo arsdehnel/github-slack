@@ -2,6 +2,7 @@
 
 const express = require('express');
 const https = require('https');
+const eventParsers = require('./event-parsers')
 var bodyParser = require('body-parser');
 
 const PORT = 8080;
@@ -27,7 +28,7 @@ const dataStore = {
     },
     "TSG-Product-Development/penta-g": {
         url: teams.pdev.url,
-        _channel: "#g6-dev"  
+        _channel: "#g6-dev"
     },
     "goalquest/goalquest": {
         url: teams.pdev.url,
@@ -35,54 +36,17 @@ const dataStore = {
     }
 }
 
-const eventParsers = {
-    push: function( request ) {
-        let returnArray = [];
-        if( request.head_commit.added.length > 0 ){
-            returnArray.push({
-                title: "Files added",
-                value: "-\t"+request.head_commit.added.join('\n-\t'),
-                short: false
-            });
-        }
-        if( request.head_commit.modified.length > 0 ){
-            returnArray.push({
-                title: "Files modified",
-                value: "-\t"+request.head_commit.modified.join('\n-\t'),
-                short: false
-            });
-        }
-        if( request.head_commit.removed.length > 0 ){
-            returnArray.push({
-                title: "Files removed",
-                value: "-\t"+request.head_commit.removed.join('\n-\t'),
-                short: false
-            });
-        }
-        if( request.commits.length > 0 ){
-            var commitMessages = request.commits.map((commit) => {
-                return commit.message
-            })            
-            returnArray.push({
-                "title": "Commit Messages",
-                "value": "-\t"+commitMessages.join('\n-\t'),
-                "short": false
-            })
-        }
 
-        return returnArray;
-    }
-}
 
 const app = express();
 
-function errorHandler (err, req, res, next) {
-  res.status(500)
-  res.render('error', { error: err })
-}
+// function errorHandler (err, req, res, next) {
+//   res.status(500)
+//   res.render('error', { error: err })
+// }
 
 app.use(bodyParser.json());
-app.use(errorHandler)
+// app.use(errorHandler)
 
 app.post('/event', function (req, res, next) {
 
@@ -94,13 +58,13 @@ app.post('/event', function (req, res, next) {
         notification.fields = eventParsers[eventType](req.body);
     }
 
-    if( !req.body.head_commit.author ){
-        console.log('------------------------------------------------------');
-        console.log('No head commit');
-        // console.log(req.body);
-        res.status(400).send('Need head_commit!').end();
-        return {};
-    }
+    // if( !req.body.head_commit.author ){
+    //     console.log('------------------------------------------------------');
+    //     console.log('No head commit');
+    //     // console.log(req.body);
+    //     res.status(400).send('Need head_commit!').end();
+    //     return {};
+    // }
 
     notification.attachments = [{
         "fallback": `GitHub ${eventType} notification for ${req.body.repository.full_name}`,
@@ -127,6 +91,8 @@ app.post('/event', function (req, res, next) {
             'Content-Length': Buffer.byteLength(JSON.stringify(notification))
         }
     };  
+
+    console.log('here');
 
     var req = https.request(requestOptions, (res) => {
         console.log(`STATUS: ${res.statusCode}`);       
