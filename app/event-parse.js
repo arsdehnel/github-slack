@@ -85,8 +85,12 @@ function eventParse( eventType, payload ) {
         orgRepoBranchParsers[config.org][config.repo] && 
         orgRepoBranchParsers[config.org][config.repo][config.branch] && 
         orgRepoBranchParsers[config.org][config.repo][config.branch][eventType] ){
+
+        notification.parser = `${config.org}.${config.repo}.${config.branch}.${eventType}`;
+
         notification = orgRepoBranchParsers[config.org][config.repo][config.branch][eventType]( notification, payload );
         return notification;
+
     }
 
     /***************************************
@@ -95,8 +99,12 @@ function eventParse( eventType, payload ) {
     if( orgRepoParsers[config.org] && 
         orgRepoParsers[config.org][config.repo] && 
         orgRepoParsers[config.org][config.repo][eventType] ){
+
+        notification.parser = `${config.org}.${config.repo}.${eventType}`;
+
         notification = orgRepoParsers[config.org][config.repo][eventType]( notification, payload );
         return notification;
+
     }
 
     /***************************************
@@ -104,6 +112,9 @@ function eventParse( eventType, payload ) {
     ****************************************/
     if( orgParsers[config.org] && 
         orgParsers[config.org][eventType] ){
+
+        notification.parser = `${config.org}.${eventType}`;
+        
         notification = orgParsers[config.org][eventType]( notification, payload );
         return notification;
     }
@@ -112,6 +123,10 @@ function eventParse( eventType, payload ) {
        DEFAULT
     ****************************************/
     if( defaultParser[eventType] ){
+        notification.parser = `${config.org}.${config.repo}.${config.branch}.${eventType}`;
+
+        notification.parser = `default.${eventType}`;
+
         notification = defaultParser[eventType]( notification, payload );
         return notification;
     }else{
