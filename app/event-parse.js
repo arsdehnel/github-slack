@@ -45,6 +45,15 @@ function eventParse( eventType, payload ) {
             }
         };
     }
+    if( !payload.ref ){
+        return {
+            send: false,
+            return: {
+                code: "00006",
+                message: `No ref key in the payload`
+            }
+        };
+    }    
     if( !payload.repository ){
         return {
             send: false,

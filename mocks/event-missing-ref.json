@@ -1,0 +1,215 @@
+{
+  "before": "36dbebe735d8638d4dec6fb17a4e9dd169a18350",
+  "after": "3174ffb8f68922977368b044b489bee9d00cffcd",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "base_ref": null,
+  "compare": "https://github.biworldwide.com/goalquest/goalquest/compare/36dbebe735d8...3174ffb8f689",
+  "commits": [
+    {
+      "id": "0dd081081f8c545aa238e4ebea3322132ef35022",
+      "tree_id": "97d0a92d9da7abc7f173de76c5ab60286b7e1580",
+      "distinct": true,
+      "message": "Adding missing label to y axis",
+      "timestamp": "2016-11-07T12:12:15-06:00",
+      "url": "https://github.biworldwide.com/goalquest/goalquest/commit/0dd081081f8c545aa238e4ebea3322132ef35022",
+      "author": {
+        "name": "Jon DeJong",
+        "email": "jon.dejong@biworldwide.com",
+        "username": "dejongj"
+      },
+      "committer": {
+        "name": "Jon DeJong",
+        "email": "jon.dejong@biworldwide.com",
+        "username": "dejongj"
+      },
+      "added": [
+        "src/app/components-shared/chart/y-axis-label.jsx"
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "src/app/components-shared/chart/chart-defaults.js",
+        "src/app/components-shared/chart/chart.jsx",
+        "src/app/components-shared/chart/x-axis-label.jsx",
+        "src/app/components-shared/chart/y-axis.jsx",
+        "src/app/components-shared/chart/y-line-label.jsx"
+      ]
+    },
+    {
+      "id": "3174ffb8f68922977368b044b489bee9d00cffcd",
+      "tree_id": "97d0a92d9da7abc7f173de76c5ab60286b7e1580",
+      "distinct": true,
+      "message": "Merge pull request #62 from dejongj/jon.dejong/chart-y-axis-label\n\nAdding missing label to y axis",
+      "timestamp": "2016-11-08T09:57:39-06:00",
+      "url": "https://github.biworldwide.com/goalquest/goalquest/commit/3174ffb8f68922977368b044b489bee9d00cffcd",
+      "author": {
+        "name": "DeJong, Jon",
+        "email": "Jon.DeJong@biworldwide.com",
+        "username": "dejongj"
+      },
+      "committer": {
+        "name": "GitHub Enterprise",
+        "email": "noreply-github@biworldwide.com"
+      },
+      "added": [
+        "src/app/components-shared/chart/y-axis-label.jsx"
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "src/app/components-shared/chart/chart-defaults.js",
+        "src/app/components-shared/chart/chart.jsx",
+        "src/app/components-shared/chart/x-axis-label.jsx",
+        "src/app/components-shared/chart/y-axis.jsx",
+        "src/app/components-shared/chart/y-line-label.jsx"
+      ]
+    }
+  ],
+  "head_commit": {
+    "id": "3174ffb8f68922977368b044b489bee9d00cffcd",
+    "tree_id": "97d0a92d9da7abc7f173de76c5ab60286b7e1580",
+    "distinct": true,
+    "message": "Merge pull request #62 from dejongj/jon.dejong/chart-y-axis-label\n\nAdding missing label to y axis",
+    "timestamp": "2016-11-08T09:57:39-06:00",
+    "url": "https://github.biworldwide.com/goalquest/goalquest/commit/3174ffb8f68922977368b044b489bee9d00cffcd",
+    "author": {
+      "name": "DeJong, Jon",
+      "email": "Jon.DeJong@biworldwide.com",
+      "username": "dejongj"
+    },
+    "committer": {
+      "name": "GitHub Enterprise",
+      "email": "noreply-github@biworldwide.com"
+    },
+    "added": [
+      "src/app/components-shared/chart/y-axis-label.jsx"
+    ],
+    "removed": [
+
+    ],
+    "modified": [
+      "src/app/components-shared/chart/chart-defaults.js",
+      "src/app/components-shared/chart/chart.jsx",
+      "src/app/components-shared/chart/x-axis-label.jsx",
+      "src/app/components-shared/chart/y-axis.jsx",
+      "src/app/components-shared/chart/y-line-label.jsx"
+    ]
+  },
+  "repository": {
+    "id": 1183,
+    "name": "goalquest",
+    "full_name": "goalquest/goalquest",
+    "owner": {
+      "name": "goalquest",
+      "email": null
+    },
+    "private": false,
+    "html_url": "https://github.biworldwide.com/goalquest/goalquest",
+    "description": "",
+    "fork": false,
+    "url": "https://github.biworldwide.com/goalquest/goalquest",
+    "forks_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/forks",
+    "keys_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/keys{/key_id}",
+    "collaborators_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/collaborators{/collaborator}",
+    "teams_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/teams",
+    "hooks_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/hooks",
+    "issue_events_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/issues/events{/number}",
+    "events_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/events",
+    "assignees_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/assignees{/user}",
+    "branches_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/branches{/branch}",
+    "tags_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/tags",
+    "blobs_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/git/blobs{/sha}",
+    "git_tags_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/git/tags{/sha}",
+    "git_refs_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/git/refs{/sha}",
+    "trees_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/git/trees{/sha}",
+    "statuses_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/statuses/{sha}",
+    "languages_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/languages",
+    "stargazers_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/stargazers",
+    "contributors_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/contributors",
+    "subscribers_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/subscribers",
+    "subscription_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/subscription",
+    "commits_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/commits{/sha}",
+    "git_commits_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/git/commits{/sha}",
+    "comments_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/comments{/number}",
+    "issue_comment_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/issues/comments{/number}",
+    "contents_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/contents/{+path}",
+    "compare_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/compare/{base}...{head}",
+    "merges_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/merges",
+    "archive_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/{archive_format}{/ref}",
+    "downloads_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/downloads",
+    "issues_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/issues{/number}",
+    "pulls_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/pulls{/number}",
+    "milestones_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/milestones{/number}",
+    "notifications_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/notifications{?since,all,participating}",
+    "labels_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/labels{/name}",
+    "releases_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/releases{/id}",
+    "deployments_url": "https://github.biworldwide.com/api/v3/repos/goalquest/goalquest/deployments",
+    "created_at": 1464794463,
+    "updated_at": "2016-08-25T21:37:07Z",
+    "pushed_at": 1478620661,
+    "git_url": "git://github.biworldwide.com/goalquest/goalquest.git",
+    "ssh_url": "git@github.biworldwide.com:goalquest/goalquest.git",
+    "clone_url": "https://github.biworldwide.com/goalquest/goalquest.git",
+    "svn_url": "https://github.biworldwide.com/goalquest/goalquest",
+    "homepage": null,
+    "size": 17098,
+    "stargazers_count": 0,
+    "watchers_count": 0,
+    "language": "JavaScript",
+    "has_issues": true,
+    "has_downloads": true,
+    "has_wiki": true,
+    "has_pages": false,
+    "forks_count": 1,
+    "mirror_url": null,
+    "open_issues_count": 2,
+    "forks": 1,
+    "open_issues": 2,
+    "watchers": 0,
+    "default_branch": "develop",
+    "stargazers": 0,
+    "master_branch": "develop",
+    "organization": "goalquest"
+  },
+  "pusher": {
+    "name": "dejongj",
+    "email": "Jon.DeJong@biworldwide.com"
+  },
+  "organization": {
+    "login": "goalquest",
+    "id": 281,
+    "url": "https://github.biworldwide.com/api/v3/orgs/goalquest",
+    "repos_url": "https://github.biworldwide.com/api/v3/orgs/goalquest/repos",
+    "events_url": "https://github.biworldwide.com/api/v3/orgs/goalquest/events",
+    "hooks_url": "https://github.biworldwide.com/api/v3/orgs/goalquest/hooks",
+    "issues_url": "https://github.biworldwide.com/api/v3/orgs/goalquest/issues",
+    "members_url": "https://github.biworldwide.com/api/v3/orgs/goalquest/members{/member}",
+    "public_members_url": "https://github.biworldwide.com/api/v3/orgs/goalquest/public_members{/member}",
+    "avatar_url": "https://github.biworldwide.com/avatars/u/281?",
+    "description": null
+  },
+  "sender": {
+    "login": "dejongj",
+    "id": 305,
+    "avatar_url": "https://github.biworldwide.com/avatars/u/305?",
+    "gravatar_id": "",
+    "url": "https://github.biworldwide.com/api/v3/users/dejongj",
+    "html_url": "https://github.biworldwide.com/dejongj",
+    "followers_url": "https://github.biworldwide.com/api/v3/users/dejongj/followers",
+    "following_url": "https://github.biworldwide.com/api/v3/users/dejongj/following{/other_user}",
+    "gists_url": "https://github.biworldwide.com/api/v3/users/dejongj/gists{/gist_id}",
+    "starred_url": "https://github.biworldwide.com/api/v3/users/dejongj/starred{/owner}{/repo}",
+    "subscriptions_url": "https://github.biworldwide.com/api/v3/users/dejongj/subscriptions",
+    "organizations_url": "https://github.biworldwide.com/api/v3/users/dejongj/orgs",
+    "repos_url": "https://github.biworldwide.com/api/v3/users/dejongj/repos",
+    "events_url": "https://github.biworldwide.com/api/v3/users/dejongj/events{/privacy}",
+    "received_events_url": "https://github.biworldwide.com/api/v3/users/dejongj/received_events",
+    "type": "User",
+    "site_admin": false,
+    "ldap_dn": "CN=dejongj,OU=Campus,OU=Users,OU=Accounts,OU=ENT,DC=bius,DC=bi,DC=corp"
+  }
+}
