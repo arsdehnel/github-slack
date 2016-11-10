@@ -28,7 +28,7 @@ const eventParsers = {
             })
         }
 
-        notification.channel = '#gq-dev';
+        notification.channel = '#gq-fed';
 
         notification.send = true;
 
