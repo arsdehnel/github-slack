@@ -1,119 +1,76 @@
-'use strict';
-
 const express = require('express');
 const https = require('https');
-const eventParsers = require('./event-parsers')
-var bodyParser = require('body-parser');
+const eventParse = require('./event-parse');
+// const defaultEventParsers = require('./event-parsers/default')
+const bodyParser = require('body-parser');
 
 const PORT = 8080;
-
-const teams = {
-    "pdev": {
-        url: "/services/T18CYMQSU/B2YB01JSF/jQJx96Q0UO1ieGbwVpH2OvR3"
-    }
-}
-
-const defaults = {
-    url: teams.pdev.url,
-    channel: "#github-hook-example",
-    username: "biw-cpd-github-bot",
-    icon_emoji: ":bulb:",
-    mrkdwn: true,
-    fields: []
-}
-
-const dataStore = {
-    "TSG-FED/demo-docs": {
-        url: teams.pdev.url
-    },
-    "TSG-Product-Development/penta-g": {
-        url: teams.pdev.url,
-        _channel: "#g6-dev"
-    },
-    "goalquest/goalquest": {
-        url: teams.pdev.url,
-        _channel: "#gq-builds"
-    }
-}
 
 
 
 const app = express();
-
-// function errorHandler (err, req, res, next) {
-//   res.status(500)
-//   res.render('error', { error: err })
-// }
-
 app.use(bodyParser.json());
-// app.use(errorHandler)
 
 app.post('/event', function (req, res, next) {
 
+    // a couple things universal to the application logic
     var eventType = req.headers['x-github-event'];
-    var notification = Object.assign({},defaults, dataStore[req.body.repository.full_name]);
     var payload = req.body;
 
-    if( eventParsers[eventType] ){
-        notification.fields = eventParsers[eventType](req.body);
-    }
+    // call our parser processor that does all the magic
+    //  - this controls if we even have a matching setup to handle this event and may return false if it doesn't fine one
+    //  - it also controls the formatting of the notification and really the entire data flow of the payload through to notification
+    const notification = eventParse( eventType, payload );
 
-    // if( !req.body.head_commit.author ){
-    //     console.log('------------------------------------------------------');
-    //     console.log('No head commit');
-    //     // console.log(req.body);
-    //     res.status(400).send('Need head_commit!').end();
-    //     return {};
-    // }
+    // console.log(notification);
 
-    notification.attachments = [{
-        "fallback": `GitHub ${eventType} notification for ${req.body.repository.full_name}`,
-        "color": "#36a64f",
-        "pretext": `A *${eventType}* event on <${req.body.repository.html_url}|${req.body.repository.full_name}> triggered this notification`,
-        "author_name": payload.head_commit.author.name,
-        "author_link": payload.sender.html_url,
-        "title": payload.head_commit.message,
-        "title_link": payload.head_commit.url,
-        "fields": notification.fields,
-        "footer": "BIW CPD GitHub Notifier",
-        "footer_icon": "https://avatars2.githubusercontent.com/u/22757997?v=3&s=60",
-        "ts": payload.repository.pushed_at,
-        "mrkdwn_in": ["pretext"]
-    }];
+    if( notification.send ){
 
-    var requestOptions = {
-        hostname: 'hooks.slack.com',
-        path: notification.url,
-        port: 443,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(notification))
-        }
-    };  
+        var requestOptions = {
+            hostname: 'hooks.slack.com',
+            path: notification.url,
+            port: 443,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(JSON.stringify(notification))
+            }
+        };  
 
-    console.log('here');
-
-    var req = https.request(requestOptions, (res) => {
-        console.log(`STATUS: ${res.statusCode}`);       
-        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
-        res.setEncoding('utf8');
-        res.on('data', (chunk) => {     
-            console.log(`BODY: ${chunk}`);      
-        });     
-        res.on('end', () => {       
-            console.log('No more data in response.');       
+        var req = https.request(requestOptions, (res) => {
+            console.log(`STATUS: ${res.statusCode}`);       
+            console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
+            res.setEncoding('utf8');
+            res.on('data', (chunk) => {     
+                console.log(`BODY: ${chunk}`);      
+            });     
+            res.on('end', () => {       
+                console.log('No more data in response.');       
+            });
         });
-    });
-    
-    req.on('error', (e) => {
-        console.log(`problem with request: ${e.message}`);
-    });
-    
-    req.write(JSON.stringify(notification));
-    req.end();
+        
+        req.on('error', (e) => {
+            console.log(`problem with request: ${e.message}`);
+        });
+        
+        req.write(JSON.stringify(notification));
+        req.end();
 
-    res.json(notification);
+        res.json(notification);
+
+    }else{
+
+        if( notification.hasOwnProperty('return') ){
+            res.status(400).json(notification.return)
+        }else{
+            res.status(500).json({
+                "code": "00001",
+                "message": "Something seems to have gone wrong in processing your request."
+            })
+        }
+
+
+    }
 
 });
 
