@@ -28,6 +28,8 @@ const eventParsers = {
             })
         }
 
+        notification.channel = '#gq-dev';
+
         notification.send = true;
 
         return notification;
