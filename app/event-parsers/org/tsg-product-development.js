@@ -49,6 +49,8 @@ const eventParsers = {
             });
         }
 
+        notification.channel = '#g6-fed';
+
         notification.send = true;
 
         return notification;
