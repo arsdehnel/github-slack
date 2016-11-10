@@ -19,9 +19,11 @@
     - false to indicate there should be no notification sent for this message
 
 ********************************************/
-const getConfig         = require('./config');
-const defaultParser     = require('./event-parsers/default')
-const orgParsers        = require('./event-parsers/org');
+const getConfig             = require('./config');
+const defaultParser         = require('./event-parsers/default')
+const orgParsers            = require('./event-parsers/org');
+const orgRepoParsers        = require('./event-parsers/org-repo');
+const orgRepoBranchParsers  = require('./event-parsers/org-repo-branch');
 
 const defaults = {
     channel: "#github-hook-example",
@@ -58,7 +60,7 @@ function eventParse( eventType, payload ) {
 
     /***************************************
        CONFIG
-     ***************************************/
+    ****************************************/
     if( !config ){
         notification.return = {
             code: "00003",
@@ -69,23 +71,37 @@ function eventParse( eventType, payload ) {
 
     /***************************************
        ORG-REPO-BRANCH
-     ***************************************/
+    ****************************************/
+    if( orgRepoBranchParsers[config.org] && 
+        orgRepoBranchParsers[config.org][config.repo] && 
+        orgRepoBranchParsers[config.org][config.repo][config.branch] && 
+        orgRepoBranchParsers[config.org][config.repo][config.branch][eventType] ){
+        notification = orgRepoBranchParsers[config.org][config.repo][config.branch][eventType]( notification, payload );
+        return notification;
+    }
 
     /***************************************
        ORG-REPO
-     ***************************************/
+    ****************************************/
+    if( orgRepoParsers[config.org] && 
+        orgRepoParsers[config.org][config.repo] && 
+        orgRepoParsers[config.org][config.repo][eventType] ){
+        notification = orgRepoParsers[config.org][config.repo][eventType]( notification, payload );
+        return notification;
+    }
 
     /***************************************
        ORG
-     ***************************************/
-    if( orgParsers[config.org] && orgParsers[config.org][eventType] ){
+    ****************************************/
+    if( orgParsers[config.org] && 
+        orgParsers[config.org][eventType] ){
         notification = orgParsers[config.org][eventType]( notification, payload );
         return notification;
     }
 
     /***************************************
        DEFAULT
-     ***************************************/
+    ****************************************/
     if( defaultParser[eventType] ){
         notification = defaultParser[eventType]( notification, payload );
         return notification;

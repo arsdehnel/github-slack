@@ -68,3 +68,14 @@ Basically at this point the parser can take in that `notification` and `payload`
 
 Really the return object should be the original incoming `notification` object with adjustments being made and specifically the `send` boolean being set appropriately.  If there is an error or message that should be returned please use the `return` key of the `notification` object and assign that an object that has `code` and `message` keys.  This will be passed back to github for reporting in the admin panel of the appropriate repo.
 
+## Adding Parsers
+
+If you want to add a parser it's pretty easy:
+
+1. Create your JS file with the appropriate parser object that has properties of the event types you want to handle.
+2. Make sure to add `module.exports = objectName` in your file
+3. Add your file to the appropriate folder depending on which level of granularity it's designed to control.
+4. Add the appropriate mapping to point at your file to the `index.js` file in the root of that directory.
+5. Create a pull request that will be reviewed mostly just to make sure it complies with the required inputs/outputs/formatting details.
+
+That's all.  Assuming the PR is approved then it'll be moved out to the internetz and be ready for use!

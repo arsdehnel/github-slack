@@ -21,7 +21,7 @@ function getConfig( repoName, payload ) {
     let retObj = {
         org: repoName.split('/')[0].toLowerCase(),
         repo: repoName.split('/')[1].toLowerCase(),
-        branch: payload.ref.split('/')[2],
+        branch: payload.ref ? payload.ref.split('/')[2] : null,
         url: orgs[repoName.split('/')[0].toLowerCase()].url
     };
 

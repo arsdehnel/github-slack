@@ -35,6 +35,9 @@ app.post('/event', function (req, res, next) {
             }
         };  
 
+        console.log('Event received: '+JSON.stringify(payload));
+        console.log('Notification to be sent: '+JSON.stringify(notification))
+
         var req = https.request(requestOptions, (res) => {
             console.log(`STATUS: ${res.statusCode}`);       
             console.log(`HEADERS: ${JSON.stringify(res.headers)}`);     
@@ -74,6 +77,6 @@ app.post('/event', function (req, res, next) {
 
 var server = app.listen(3000, function () {
   var port = server.address().port;
-  console.log('Example app listening at port %s', port);
+  console.log('App listening at port %s', port);
 });
 module.exports = server;
