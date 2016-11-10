@@ -22,8 +22,6 @@ app.post('/event', function (req, res, next) {
     //  - it also controls the formatting of the notification and really the entire data flow of the payload through to notification
     const notification = eventParse( eventType, payload );
 
-    // console.log(notification);
-
     if( notification.send ){
 
         var requestOptions = {

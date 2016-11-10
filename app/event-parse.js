@@ -19,8 +19,9 @@
     - false to indicate there should be no notification sent for this message
 
 ********************************************/
-const getConfig = require('./config');
-const orgParsers = require('./event-parsers/org');
+const getConfig         = require('./config');
+const defaultParser     = require('./event-parsers/default')
+const orgParsers        = require('./event-parsers/org');
 
 const defaults = {
     channel: "#github-hook-example",
@@ -33,9 +34,31 @@ const defaults = {
 
 function eventParse( eventType, payload ) {
 
+    if( !eventType ){
+        return {
+            send: false,
+            return: {
+                code: "00005",
+                message: `No event type in the headers`
+            }
+        };
+    }
+    if( !payload.repository ){
+        return {
+            send: false,
+            return: {
+                code: "00004",
+                message: `No repository key in the payload`                
+            }
+        };
+    }
+
     const config = getConfig( payload.repository.full_name, payload );
     let notification = Object.assign({},defaults, config);
 
+    /***************************************
+       CONFIG
+     ***************************************/
     if( !config ){
         notification.return = {
             code: "00003",
@@ -44,16 +67,35 @@ function eventParse( eventType, payload ) {
         return notification;
     }
 
+    /***************************************
+       ORG-REPO-BRANCH
+     ***************************************/
+
+    /***************************************
+       ORG-REPO
+     ***************************************/
+
+    /***************************************
+       ORG
+     ***************************************/
     if( orgParsers[config.org] && orgParsers[config.org][eventType] ){
         notification = orgParsers[config.org][eventType]( notification, payload );
         return notification;
     }
 
-    notification.return = {
-        code: "00002",
-        message: `No parser found for this event (org: ${notification.org}, repo: ${notification.repo}, branch: ${notification.branch}, eventType: ${eventType})`
-    };
-    return notification;
+    /***************************************
+       DEFAULT
+     ***************************************/
+    if( defaultParser[eventType] ){
+        notification = defaultParser[eventType]( notification, payload );
+        return notification;
+    }else{
+        notification.return = {
+            code: "00002",
+            message: `No parser found for this event (org: ${notification.org}, repo: ${notification.repo}, branch: ${notification.branch}, eventType: ${eventType})`
+        };
+        return notification;        
+    }
 
 }
 
